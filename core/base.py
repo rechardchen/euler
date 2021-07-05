@@ -1,12 +1,13 @@
 import glfw
 import glfw.GLFW
-from input import Input
+from .input import Input
+from .openGLUtils import GL_MAJOR_VERSION, GL_MINOR_VERSION
 
 class Base(object):
     def __init__(self, windowSize = [512,512], windowTitle="Euler Framework") -> None:
         glfw.init()
-        glfw.window_hint(glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR, 4)
-        glfw.window_hint(glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR, 3)
+        glfw.window_hint(glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR, GL_MAJOR_VERSION)
+        glfw.window_hint(glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR, GL_MINOR_VERSION)
         glfw.window_hint(glfw.GLFW.GLFW_OPENGL_PROFILE, glfw.GLFW.GLFW_OPENGL_CORE_PROFILE)
 
         self.window = glfw.create_window(windowSize[0], windowSize[1], windowTitle, None, None)
