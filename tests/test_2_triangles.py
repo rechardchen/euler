@@ -44,6 +44,8 @@ class Test(Base):
         self.baseColor2 = Uniform(Uniform.Vec3Type, [0.0,0.0,1.0])
         self.baseColor2.locateVariable(self.programRef, "baseColor")
 
+        # glEnable(GL_CULL_FACE)
+        # glCullFace(GL_FRONT)
         glEnable(GL_DEPTH_TEST)
         glDepthFunc(GL_LEQUAL)
         glClearColor(0.0, 0.0, 0.0, 1.0)

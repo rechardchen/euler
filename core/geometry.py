@@ -92,7 +92,7 @@ class Box(Geometry):
                              [4,5,6],[4,6,7],
                              [5,1,2],[5,2,6],
                              [7,6,2],[7,2,3],
-                             [4,0,2],[4,1,5]])
+                             [4,0,1],[4,1,5]])
         self.countVertices()
 
 class ParametricGeometry(Geometry):
