@@ -1,4 +1,6 @@
-import glfw.GLFW
+# import KEY_XXX them all
+# TODO remove the ugly use
+from glfw import *
 
 class KeyEvent:
     def __init__(self,key,action,mode):
@@ -19,10 +21,10 @@ class Input(object):
         self.keyUpList.clear()
 
         for evt in self.keyEvents:
-            if evt.action == glfw.GLFW.GLFW_PRESS:
+            if evt.action == PRESS:
                 self.keyDownList.add(evt.key)
                 self.keyPressedList.add(evt.key)
-            elif evt.action == glfw.GLFW.GLFW_RELEASE:
+            elif evt.action == RELEASE:
                 self.keyUpList.add(evt.key)
                 self.keyPressedList.remove(evt.key)
         self.keyEvents.clear()

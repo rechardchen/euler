@@ -10,6 +10,7 @@ class Uniform(object):
     Vec2Type = 3
     Vec3Type = 4
     Vec4Type = 5
+    Mat4Type = 6
 
     def __init__(self, dataType, data):
         self.dataType = dataType
@@ -34,5 +35,7 @@ class Uniform(object):
             glUniform3f(self.variableRef, self.data[0],self.data[1],self.data[2])
         elif self.dataType == Uniform.Vec4Type:
             glUniform4f(self.variableRef, self.data[0],self.data[1],self.data[2],self.data[3])
+        elif self.dataType == Uniform.Mat4Type:
+            glUniformMatrix4fv(self.variableRef, 1, GL_TRUE, self.data)
         else:
             raise Exception("Uniform slot {} has unknown dataType {}".format(self.variableRef, self.dataType))

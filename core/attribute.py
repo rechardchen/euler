@@ -42,4 +42,7 @@ class Attribute(object):
         else:
             raise Exception("Attribute "+variableName + " has unknown type "+str(self.dataType))
         glEnableVertexAttribArray(variableRef)
+    
+    # def __del__(self):
+    #     glDeleteBuffers(1,(self.bufferRef,))
         
