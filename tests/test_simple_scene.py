@@ -8,6 +8,7 @@ from core.camera import Camera
 from core.geometry import Box
 from core.attribute import Attribute
 from material.basicMaterial import SurfaceMaterial
+from extras.helpers import AxisHelper,GridHelper
 
 class Test(Base):
     def initialize(self):
@@ -21,13 +22,20 @@ class Test(Base):
         geometry = Box(other_attribs={
             "vertexColor":(Attribute.Vec3Type, [[1,1,1],[1,0,0],[0,1,0],[0,0,1]]*2)
         })
-        material = SurfaceMaterial({"useVertexColor":True})
+        material = SurfaceMaterial({
+            "useVertexColor":True,
+            # "wireframe":True,
+            # "lineWidth":4
+        })
         self.mesh = Mesh(geometry, material)
         self.scene.add(self.mesh)
+        self.scene.add(AxisHelper(lineWidth=3))
+        self.scene.add(GridHelper(lineWidth=2, gridColor=[0.5,0.5,0.5]))
 
     def update(self,dt):
         self.mesh.rotateY(0.514*dt)
         self.mesh.rotateX(0.337*dt)
+        # self.camera.rotateX(0.3*dt, False)
 
         self.renderer.render(self.scene, self.camera)
 

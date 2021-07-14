@@ -83,7 +83,6 @@ class Box(Geometry):
         self.addAttribute(Attribute.Vec3Type, "vertexPosition", positionData)
 
         for k,v in other_attribs.items():
-            print(len(positionData), len(v[1]))
             assert len(v[1]) == len(positionData)
             self.addAttribute(v[0], k, v[1])
         
