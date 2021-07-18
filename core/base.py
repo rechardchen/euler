@@ -1,11 +1,11 @@
 import glfw
-from .input import Input
+from .input import Input,MouseEvent
 from .openGLUtils import GL_MAJOR_VERSION, GL_MINOR_VERSION
 from time import time
 from OpenGL.GL import glViewport
 
 class Base(object):
-    def __init__(self, windowSize = [512,512], windowTitle="Euler Framework") -> None:
+    def __init__(self, windowSize = [1024,768], windowTitle="Euler Framework") -> None:
         glfw.init()
         glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, GL_MAJOR_VERSION)
         glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, GL_MINOR_VERSION)
@@ -16,9 +16,11 @@ class Base(object):
         #make the window context current
         glfw.make_context_current(self.window)
 
-        self.input = Input()
-        glfw.set_key_callback(self.window, self.windowKeyCallback)
+        self.input = Input(self.window)
+        glfw.set_key_callback(self.window, self.keyCallback)
         glfw.set_framebuffer_size_callback(self.window, self.frameBufferSizeCallback)
+        glfw.set_cursor_pos_callback(self.window, self.cursorPosCallback)
+        glfw.set_mouse_button_callback(self.window, self.mouseButtonCallback)
         
         self.timeStamp = time()
 
@@ -55,11 +57,19 @@ class Base(object):
 
         glfw.terminate()
     
-    def windowKeyCallback(self, window, key, scanCode, action, mode):
+    def keyCallback(self, window, key, scanCode, action, mode):
         self.input.receiveKeyEvent(key,action,mode)
     
     def frameBufferSizeCallback(self, window, width, height):
         glViewport(0,0,width,height)
+    
+    def cursorPosCallback(self, window, x, y):
+        self.input.receiveCursorEvent(x, y)
+    
+    def mouseButtonCallback(self, window, button, action, mode):
+        pos = glfw.get_cursor_pos(window)
+        mouseEvt = MouseEvent(button,action,mode,pos)
+        self.input.receiveMouseButtonEvent(mouseEvt)
 
 if __name__ == "__main__":
     # Base().run()

@@ -56,7 +56,7 @@ class Object3D(object):
                 self.transform.item((2,3))]
     
     def getWorldPosition(self):
-        worldTransform = self.getWorldTransform()
+        worldTransform = self.getWorldMatrix()
         return [worldTransform.item((0,3)), 
                 worldTransform.item((1,3)),
                 worldTransform.item((2,3))]

@@ -8,7 +8,7 @@ class Camera(Object3D):
         self.projectionMatrix = makeIdentity()
         self.viewMatrix = makeIdentity()
     
-    def setPerspective(self,angleOfView=60,aspectRatio=1,near=0.1,far=1000):
+    def setPerspective(self,angleOfView=60,aspectRatio=4/3,near=0.1,far=1000):
         self.projectionMatrix = makePerspective(angleOfView,aspectRatio,near,far)
 
     def updateViewMatrix(self):

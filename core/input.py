@@ -8,11 +8,27 @@ class KeyEvent:
         self.action = action
         self.mode = mode
 
+class MouseEvent:
+    def __init__(self,button,action,mode,pos):
+        self.button = button
+        self.action = action
+        self.mode = mode
+        self.pos = pos
+
 class Input(object):
-    def __init__(self) -> None:
+    def __init__(self, window) -> None:
+        self.window = window
+
+        # keyboard state
         self.keyDownList    = set()
         self.keyUpList      = set()
         self.keyPressedList = set()
+
+        # mouse state
+        self.mousePos = [0,0]
+
+        # self.mouseButtons = [False]*3
+        self.mouseEvtListeners = []
 
         self.keyEvents      = []
 
@@ -36,8 +52,25 @@ class Input(object):
         return key in self.keyUpList
     
     def isKeyPressed(self, key):
-        return key in self.keyPressedList
+        return key in self.keyPressedList    
+
+    def setMousePos(self, x,y):
+        set_cursor_pos(self.window, x, y)
+    
+    def showCursor(self, show):
+        set_input_mode(self.window, CURSOR, CURSOR_NORMAL if show else CURSOR_HIDDEN)
 
     def receiveKeyEvent(self, k,a,m):
         self.keyEvents.append(KeyEvent(k,a,m))
+    
+    def receiveCursorEvent(self, x, y):
+        self.mousePos[0] = x
+        self.mousePos[1] = y
+
+    def receiveMouseButtonEvent(self,mouseEvt):
+        for listener in self.mouseEvtListeners:
+            listener.mouseEvent(mouseEvt, self)
+    
+    def regMouseEventListener(self, listener):
+        self.mouseEvtListeners.append(listener)
     
